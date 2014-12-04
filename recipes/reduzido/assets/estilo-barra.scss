@@ -1,0 +1,99 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+v2.0 | 20110126
+License:none (public domain) */
+
+/* variaveis */
+$border-color: #dfdfdf;
+$background-color: #f1f1f1;
+$link-color: #606060;
+
+/* web font */
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 700;
+  src: local("Open Sans Bold"), local("OpenSans-Bold"), url("//barra.brasil.gov.br/static/opensans-bold.woff") format("woff");
+}
+
+/* fim da web font */
+/* _b_ será substituído por barra-brasil */
+#_b_ {
+  /* Css reset mínimo */
+  div, a, ul, li {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font-family: inherit;
+    vertical-align: baseline;
+  }
+  ul {
+    list-style: none;
+  }
+
+  /* fim css reset mínimo */
+  height: 32px;
+  background: $background-color;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 32px;
+  font-family: "Open Sans", Arial, Helvetica, sans-serif;
+  border-bottom: 1px solid $border-color;
+  a {
+    text-decoration: none;
+  }
+  .brasil-flag {
+    float: left;
+    padding: 7px 0 6px;
+    width: 115px;
+    height: 19px;
+    border-right: 2px solid $border-color;
+    .link-barra {
+      display: block;
+      padding-left: 42px;
+      width: 43px;
+      background: embed("imagens/bandeira-brasil.png") 8px center no-repeat;
+      text-transform: uppercase;
+      line-height: 19px;
+    }
+  }
+  .acesso-info {
+    position: absolute;
+    left: 130px;
+  }
+  .list {
+    position: absolute;
+    top: 0;
+    right: 0;
+    .first {
+      border-left: 2px solid $border-color;
+    }
+  }
+  .list-item {
+    display: inline-block;
+    padding: 0 15px 0 13px;
+    height: 32px;
+    border-right: 2px solid $border-color;
+  }
+  .link-barra {
+    color: $link-color;
+  }
+}
+div#wrapper-_b_ {
+  position: relative;
+  overflow: hidden;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 960px;
+  height: 100%;
+}
+@media screen and (max-width:668px) {
+  #_b_ .list {
+    top: -100px;
+  }
+}
+@media screen and (min-width:960px) {
+  #wrapper-_b_ {
+    width: 960px;
+  }
+}

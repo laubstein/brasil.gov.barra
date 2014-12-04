@@ -1,0 +1,93 @@
+# configuracao do assetgen para:
+# - gerar o script de comportamento, minificado
+# - gerar o css com as imagens incorporadas
+
+generate:
+
+- barra-footer-brasil-1.js:
+    source:
+      - assets/conteudo-barra.html
+    template: |
+        var conteudoBarra = '${source|trim}';
+    compress: false
+
+- barra-footer-brasil-2.js:
+    source:
+      - assets/conteudo-footer.html
+    template: |
+        var conteudoFooter = '${source|trim}';
+    compress: false
+
+- barra-footer-brasil-3.js:
+    source:
+      - build/barra-footer-brasil-1.js
+      - build/barra-footer-brasil-2.js
+    template: |
+        ${source|trim}
+    compress: false
+
+- barra-footer-brasil-4.js:
+    source:
+      - build/barra-footer-brasil-3.js
+      - assets/common.coffee
+      - assets/barra-brasil.coffee
+      - assets/footer-brasil.coffee
+      - raw: "})(window);\n"  # fechamento do escopo da funcao anonima (ver template abaixo)
+    template: |
+        (function(w){
+          ${source|trim};
+    compress: false
+
+- estilo-barra-footer-1.css:
+    source:
+      - assets/estilo-barra.scss
+    depends:
+      - assets/imagens/*
+    embed.path.root: assets
+    embed.url.base: imagens/
+
+- estilo-barra-footer-2.css:
+    source:
+      - assets/estilo-footer.scss
+    depends:
+      - assets/imagens/*
+    embed.path.root: assets
+    embed.url.base: imagens/
+
+- barra-brasil-footer-css-1.js:
+    source:
+      - build/estilo-barra-footer-1.css
+    template: |
+        window._barrabrasil.barra('${source|trim}');
+    compress: false
+
+- barra-brasil-footer-css-2.js:
+    source:
+      - build/estilo-barra-footer-2.css
+    template: |
+        window._barrabrasil.footer('${source|trim}');
+    compress: false
+
+- barra-footer-brasil-original.js:
+    source:
+      - build/barra-footer-brasil-4.js
+      - build/barra-brasil-footer-css-1.js
+      - build/barra-brasil-footer-css-2.js
+    compress: false
+
+- barra-footer-brasil-original.min.js:
+    source:
+      - build/barra-footer-brasil-original.js
+    compress: true
+
+css.embed: true
+css.embed.only: true
+css.compress: true
+js.uglify.bin: uglifyjs
+output.directory: build
+output.hashed: false
+output.manifest: assets.json
+
+profile.dev:
+  css.compress: false
+  js.compress: false

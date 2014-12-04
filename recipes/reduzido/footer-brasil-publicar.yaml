@@ -1,0 +1,20 @@
+# configuracao do assetgen para:
+# - mesclar o css com javascript de comportamento
+
+generate:
+
+- barra-brasil.js:
+    source:
+      - build/footer-brasil-original.min.js # parte de comportamento
+    uglify.bin: uglifyjs
+    compress: false
+
+css.embed: true
+css.embed.only: true
+output.directory: ../../app/templates/reduzido
+output.hashed: false
+output.manifest: assets.json
+
+profile.dev:
+  css.compress: false
+  js.compress: false

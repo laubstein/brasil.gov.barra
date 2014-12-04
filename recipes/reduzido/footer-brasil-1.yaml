@@ -1,0 +1,54 @@
+# configuracao do assetgen para:
+# - gerar o script de comportamento, minificado
+# - gerar o css com as imagens incorporadas
+
+generate:
+
+- footer-brasil-1.js:
+    source:
+      - assets/conteudo-footer.html
+      - assets/common.coffee
+      - assets/footer-brasil.coffee
+      - raw: "})(window);"  # fechamento do escopo da funcao anonima (ver template abaixo)
+    template: |
+        (function(w){
+            var conteudoFooter = '${source|trim}';
+    compress: false
+
+- estilo-footer.css:
+    source:
+      - assets/estilo-footer.scss
+    depends:
+      - assets/imagens/*
+    embed.path.root: assets
+    embed.url.base: imagens/
+
+- footer-brasil-css.js:
+    source:
+      - build/estilo-footer.css
+    template: |
+        window._barrabrasil.footer('${source|trim}');
+    compress: false
+
+- footer-brasil-original.js:
+    source:
+      - build/footer-brasil-1.js     # parte de comportamento
+      - build/footer-brasil-css.js   # codigo de insercao do css
+    compress: false
+
+- footer-brasil-original.min.js:
+    source:
+      - build/footer-brasil-original.js
+    compress: true
+
+css.embed: true
+css.embed.only: true
+css.compress: true
+js.uglify.bin: uglifyjs
+output.directory: build
+output.hashed: false
+output.manifest: assets.json
+
+profile.dev:
+  css.compress: false
+  js.compress: false
